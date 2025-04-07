@@ -34,7 +34,7 @@ Combining phoneme errors with psychological inputs, the system generates **perso
 ---
 
 > 🔗 **View Psychological Assessment Form**  
-> ![Psychological Form](/assets/images/psychological_form.jpg)  
+> ![Psychological Form](/assets/images/psychological_form.png)  
 > *(Form details and question mappings are available in the repository’s `/data` folder.)*
 
 

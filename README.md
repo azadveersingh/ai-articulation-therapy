@@ -26,12 +26,17 @@ The pipeline consists of three major modules:
 Grapheme-to-Phoneme (G2P) transformation is performed using multiple LLMs (LLaMA 8B, Mistral 7B, LLaMA 7B), followed by CoT (Chain-of-Thought) reasoning via a Gamma 9B model to select the most appropriate IPA transcription.
 
 ### 2. Interpretation Module
-The IPA output is analyzed for phonetic inconsistencies and articulation errors using the same LLM ensemble. This step aids in identifying speech patterns and phoneme-level deviations in disordered speech.
+Using the same LLM ensemble, the IPA output is analyzed for phonetic inconsistencies and articulation errors. This step aids in identifying speech patterns and phoneme-level deviations in disordered speech.
 
 ### 3. Final Decision & Therapy Recommendation
 Combining phoneme errors with psychological inputs, the system generates **personalized therapy exercises** tailored to individual needs. The psychological question bank and logic for therapy generation are available in this repository[^1].
 
 ---
+
+> 🔗 **View Psychological Assessment Form**  
+> ![Psychological Form](./assets/images/psychological_form.jpg)  
+> *(Form details and question mappings are available in the repository’s `/data` folder.)*
+
 
 ## 🧪 Dataset Links
 

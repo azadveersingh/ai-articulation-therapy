@@ -1,0 +1,142 @@
+{
+    "sample_0": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 3.16,
+        "original_transcript": "storm",
+        "asr_transcript": " It's done."
+    },
+    "sample_1": {
+        "speech_status": "dysarthria",
+        "gender": "female",
+        "duration_seconds": 4.45,
+        "original_transcript": "She wore warm fleecy woolen overalls",
+        "asr_transcript": " Okay. She wore a white fleece brown overalls."
+    },
+    "sample_2": {
+        "speech_status": "dysarthria",
+        "gender": "female",
+        "duration_seconds": 1.35,
+        "original_transcript": "single",
+        "asr_transcript": " single"
+    },
+    "sample_3": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 2.11,
+        "original_transcript": "alpha",
+        "asr_transcript": " Alpha"
+    },
+    "sample_4": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 3.0,
+        "original_transcript": "sip",
+        "asr_transcript": " Sip."
+    },
+    "sample_5": {
+        "speech_status": "dysarthria",
+        "gender": "female",
+        "duration_seconds": 1.05,
+        "original_transcript": "yes",
+        "asr_transcript": " Yeah."
+    },
+    "sample_6": {
+        "speech_status": "dysarthria",
+        "gender": "female",
+        "duration_seconds": 2.7,
+        "original_transcript": "mitten",
+        "asr_transcript": " Mitten? Mitten?"
+    },
+    "sample_7": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 8.36,
+        "original_transcript": "Well he is nearly ninetythree years old",
+        "asr_transcript": " Why? He is really 93 years old."
+    },
+    "sample_8": {
+        "speech_status": "dysarthria",
+        "gender": "female",
+        "duration_seconds": 6.06,
+        "original_transcript": "It eventually became a rather proud claim",
+        "asr_transcript": " It eventually became a rather proud claim."
+    },
+    "sample_9": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 3.54,
+        "original_transcript": "He wrapped the package hastily",
+        "asr_transcript": " He wrapped the package hastily."
+    },
+    "sample_10": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 1.65,
+        "original_transcript": "five",
+        "asr_transcript": " Bye."
+    },
+    "sample_11": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.2,
+        "original_transcript": "fill",
+        "asr_transcript": " Phil."
+    },
+    "sample_12": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 3.75,
+        "original_transcript": "know",
+        "asr_transcript": " No."
+    },
+    "sample_13": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 2.7,
+        "original_transcript": "lock",
+        "asr_transcript": " luck."
+    },
+    "sample_14": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 2.4,
+        "original_transcript": "up",
+        "asr_transcript": " Up."
+    },
+    "sample_15": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 1.66,
+        "original_transcript": "eyes",
+        "asr_transcript": " Eyes."
+    },
+    "sample_16": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 2.04,
+        "original_transcript": "chop",
+        "asr_transcript": " Chop."
+    },
+    "sample_17": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 2.64,
+        "original_transcript": "seed",
+        "asr_transcript": " Seed."
+    },
+    "sample_18": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 2.85,
+        "original_transcript": "The wait for work can be very long",
+        "asr_transcript": " The wait for work can be very long."
+    },
+    "sample_19": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.47,
+        "original_transcript": "pit",
+        "asr_transcript": " Pit."
+    }
+}

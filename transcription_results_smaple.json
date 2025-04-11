@@ -1,0 +1,142 @@
+{
+    "sample_0": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 2.67,
+        "original_transcript": "fat",
+        "asr_transcript": " Tutututututu"
+    },
+    "sample_1": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 2.89,
+        "original_transcript": "feed",
+        "asr_transcript": " Food"
+    },
+    "sample_2": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 2.4,
+        "original_transcript": "take",
+        "asr_transcript": " Hey!"
+    },
+    "sample_3": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 1.41,
+        "original_transcript": "torn",
+        "asr_transcript": " Darn."
+    },
+    "sample_4": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 8.42,
+        "original_transcript": "Mother sews yellow gingham aprons",
+        "asr_transcript": " my little yellow gingham apron."
+    },
+    "sample_5": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 7.69,
+        "original_transcript": "The train approached the depot slowly",
+        "asr_transcript": " Then drink a poke, then email slowly\u2014"
+    },
+    "sample_6": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 5.66,
+        "original_transcript": "mitten",
+        "asr_transcript": " Meditate."
+    },
+    "sample_7": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 2.63,
+        "original_transcript": "wish",
+        "asr_transcript": " Wish."
+    },
+    "sample_8": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 3.0,
+        "original_transcript": "fate",
+        "asr_transcript": " Peace."
+    },
+    "sample_9": {
+        "speech_status": "dysarthria",
+        "gender": "male",
+        "duration_seconds": 1.99,
+        "original_transcript": "spark",
+        "asr_transcript": " fuck"
+    },
+    "sample_10": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 2.25,
+        "original_transcript": "xray",
+        "asr_transcript": " X-ray"
+    },
+    "sample_11": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.93,
+        "original_transcript": "swarm",
+        "asr_transcript": " swarm"
+    },
+    "sample_12": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.8,
+        "original_transcript": "cheer",
+        "asr_transcript": " here."
+    },
+    "sample_13": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.05,
+        "original_transcript": "gill",
+        "asr_transcript": " Gil."
+    },
+    "sample_14": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 3.2,
+        "original_transcript": "air",
+        "asr_transcript": " Air"
+    },
+    "sample_15": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 2.4,
+        "original_transcript": "end",
+        "asr_transcript": " End."
+    },
+    "sample_16": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 4.2,
+        "original_transcript": "She makes other trips for pleasure",
+        "asr_transcript": " She makes other trips for pleasure."
+    },
+    "sample_17": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 1.5,
+        "original_transcript": "farm",
+        "asr_transcript": " farm."
+    },
+    "sample_18": {
+        "speech_status": "healthy",
+        "gender": "female",
+        "duration_seconds": 3.14,
+        "original_transcript": "Range was a vital detail",
+        "asr_transcript": " Range was a vital detail."
+    },
+    "sample_19": {
+        "speech_status": "healthy",
+        "gender": "male",
+        "duration_seconds": 2.85,
+        "original_transcript": "pill",
+        "asr_transcript": " Hail!"
+    }
+}

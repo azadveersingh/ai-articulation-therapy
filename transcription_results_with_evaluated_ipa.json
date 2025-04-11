@@ -1,0 +1,482 @@
+{
+  "sample_0": {
+    "speech_status": "dysarthria",
+    "gender": "male",
+    "duration_seconds": 3.16,
+    "original_transcript": "storm",
+    "asr_transcript": " It's done.",
+    "original_ipa_model_1": "/stɔːm/",
+    "asr_ipa_model_1": "/ɪts dɒn/",
+    "original_ipa_model_2": "/stɔːrm/",
+    "asr_ipa_model_2": " or ",
+    "original_ipa_model_3": "/stɔːrm/",
+    "asr_ipa_model_3": "/ɪts dʊn/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/stɔːm/",
+      "best_ipa_transcript": "/ɪts dɒn/",
+      "confidence": 9,
+      "selected_model": "Model 1",
+      "error": {
+        "IPA Mismatches": 5,
+        "Normalized Error Rate": 0.7142857142857143,
+        "Similarity Score": 0.2857142857142857
+      }
+    }
+  },
+  "sample_1": {
+    "speech_status": "dysarthria",
+    "gender": "female",
+    "duration_seconds": 4.45,
+    "original_transcript": "She wore warm fleecy woolen overalls",
+    "asr_transcript": " Okay. She wore a white fleece brown overalls.",
+    "original_ipa_model_1": "/sheː wɔːr ˈwʊlən ˈɒvərəlz/",
+    "asr_ipa_model_1": " /ˈʃiː / /wɔr / /ə / /waɪt / /fliːs / /braʊn / ",
+    "original_ipa_model_2": " represents the voiceless alveolar fricative ",
+    "asr_ipa_model_2": "/ˈɔkə/",
+    "original_ipa_model_3": "/ʃi wɔːr wɔːrm fleɪsi wʊlən oʊvərɔːlz/",
+    "asr_ipa_model_3": " /ʃiː/ /wɔːr/ /ə/ /waɪt/ /flis/ /brɔːn/ ",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ʃi wɔːr wɔːrm fleɪsi wʊlən oʊvərɔːlz/",
+      "best_ipa_transcript": "/ˈʃiː / /wɔr / /ə / /waɪt / /fliːs / /braʊn /",
+      "confidence": 8,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 27,
+        "Normalized Error Rate": 0.8181818181818182,
+        "Similarity Score": 0.18181818181818177
+      }
+    }
+  },
+  "sample_2": {
+    "speech_status": "dysarthria",
+    "gender": "female",
+    "duration_seconds": 1.35,
+    "original_transcript": "single",
+    "asr_transcript": " single",
+    "original_ipa_model_1": "/sɪŋgəl/",
+    "asr_ipa_model_1": "/sɪŋgəl/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": "/ˈsɪŋɡəl/",
+    "original_ipa_model_3": "/ˈsɪŋɡəl/",
+    "asr_ipa_model_3": "/sɪŋɡəl/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/sɪŋgəl/",
+      "best_ipa_transcript": "/sɪŋɡəl/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.125,
+        "Similarity Score": 0.875
+      }
+    }
+  },
+  "sample_3": {
+    "speech_status": "dysarthria",
+    "gender": "male",
+    "duration_seconds": 2.11,
+    "original_transcript": "alpha",
+    "asr_transcript": " Alpha",
+    "original_ipa_model_1": "/ˈæl.fə/",
+    "asr_ipa_model_1": "/ˈæl.fə/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": null,
+    "original_ipa_model_3": "/ˈæl.fə/",
+    "asr_ipa_model_3": "/ˈæl.fə/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ˈæl.fə/",
+      "best_ipa_transcript": "/ˈæl.fə/",
+      "confidence": 10,
+      "selected_model": "None",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_4": {
+    "speech_status": "dysarthria",
+    "gender": "male",
+    "duration_seconds": 3.0,
+    "original_transcript": "sip",
+    "asr_transcript": " Sip.",
+    "original_ipa_model_1": "/sɪp/",
+    "asr_ipa_model_1": "/sɪp/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": "/ˈsɪp./",
+    "original_ipa_model_3": "/sɪp/",
+    "asr_ipa_model_3": "/sɪp/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/sɪp/",
+      "best_ipa_transcript": "/sɪp/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_5": {
+    "speech_status": "dysarthria",
+    "gender": "female",
+    "duration_seconds": 1.05,
+    "original_transcript": "yes",
+    "asr_transcript": " Yeah.",
+    "original_ipa_model_1": "/ˈjɛs/",
+    "asr_ipa_model_1": "/ˈjɛh/",
+    "original_ipa_model_2": " or ",
+    "asr_ipa_model_2": "/jɛʔ/",
+    "original_ipa_model_3": "/jɛs/",
+    "asr_ipa_model_3": "/jɛ/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/jɛs/",
+      "best_ipa_transcript": "/jɛʔ/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.2,
+        "Similarity Score": 0.8
+      }
+    }
+  },
+  "sample_6": {
+    "speech_status": "dysarthria",
+    "gender": "female",
+    "duration_seconds": 2.7,
+    "original_transcript": "mitten",
+    "asr_transcript": " Mitten? Mitten?",
+    "original_ipa_model_1": "/mɪtən/",
+    "asr_ipa_model_1": "/mɪtən/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": " or ",
+    "original_ipa_model_3": "/mɪtən/",
+    "asr_ipa_model_3": "/mɪtən/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/mɪtən/",
+      "best_ipa_transcript": "/mɪtən/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_7": {
+    "speech_status": "dysarthria",
+    "gender": "male",
+    "duration_seconds": 8.36,
+    "original_transcript": "Well he is nearly ninetythree years old",
+    "asr_transcript": " Why? He is really 93 years old.",
+    "original_ipa_model_1": "/wɛl hɛ ˈnɛrəli ˈnɪnətəl ˈɪrəz ˈɒld/",
+    "asr_ipa_model_1": " /hɪ/ /ɪs/ /ˈrɛlɪ/ /93/ /ˈjɛr/ ",
+    "original_ipa_model_2": "/wɛl hɛɪs næriː nɪnetyθirty jɛərz ol/",
+    "asr_ipa_model_2": "/wɪθ/",
+    "original_ipa_model_3": "/wɛl hɪz nɛəɹi naɪntiθriːz jɛərz oʊld/",
+    "asr_ipa_model_3": " /hɪz/ /riːli/ /naɪnθriː/ /jɛrz/ ",
+    "evaluated_ipa": {
+      "best_ipa_original": "/wɛl hɛ ˈnɛrəli ˈnɪnətəl ˈɪrəz ˈɒld/",
+      "best_ipa_transcript": "/hɪ/ /ɪs/ /ˈrɛlɪ/ /93/ /ˈjɛr/ ",
+      "confidence": 9,
+      "selected_model": "2",
+      "error": {
+        "IPA Mismatches": 26,
+        "Normalized Error Rate": 0.8387096774193549,
+        "Similarity Score": 0.16129032258064513
+      }
+    }
+  },
+  "sample_8": {
+    "speech_status": "dysarthria",
+    "gender": "female",
+    "duration_seconds": 6.06,
+    "original_transcript": "It eventually became a rather proud claim",
+    "asr_transcript": " It eventually became a rather proud claim.",
+    "original_ipa_model_1": "/ɪt ɛvənˈtuəl ˈbɛkəm ˈræðər ˈpraʊd ˈkleɪm/",
+    "asr_ipa_model_1": "/ɪt ɛvənˈtuəl.li bɪˈkɒm/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": "/ɪt/",
+    "original_ipa_model_3": "/ɪt ˌɛvəˈnʊʃəli ˈbeɪmd ˈæ rɑðər ˈprɔd ˈkleɪm/",
+    "asr_ipa_model_3": "/ɪt ˌɛvənʧuːlɪ ˈbeɪmd ˈæ rɑðər ˈprɔd ˈkleɪm/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ɪt ɛvənˈtuəl ˈbɛkəm ˈræðər ˈpraʊd ˈkleɪm/",
+      "best_ipa_transcript": "/ɪt ˌɛvəˈnʊʃəli ˈbeɪmd ˈæ rɑðər ˈprɔd ˈkleɪm/",
+      "confidence": 9,
+      "selected_model": "Option 1",
+      "error": {
+        "IPA Mismatches": 14,
+        "Normalized Error Rate": 0.3783783783783784,
+        "Similarity Score": 0.6216216216216216
+      }
+    }
+  },
+  "sample_9": {
+    "speech_status": "dysarthria",
+    "gender": "male",
+    "duration_seconds": 3.54,
+    "original_transcript": "He wrapped the package hastily",
+    "asr_transcript": " He wrapped the package hastily.",
+    "original_ipa_model_1": "/he wɹæpɪd ðə pækɪd hæsɪlɪ/",
+    "asr_ipa_model_1": "/hɛ wɹæp ˈðæ pækɪd hæs.tɪ.li/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": "/ˈhɛ wrəpt ðə pækɪd ˈhæstɪli/",
+    "original_ipa_model_3": "/hɛ wɹæpð ðə pæksɪd hæsɪtli/",
+    "asr_ipa_model_3": "/hɛ wɹæpð ðə pækɪdʒ hæsɪtli/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/hɛ wɹæp ˈðæ pækɪd hæs.tɪ.li/",
+      "best_ipa_transcript": "/hɛ wɹæp ˈðæ pækɪd hæs.tɪ.li/",
+      "confidence": 10,
+      "selected_model": "None",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_10": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 1.65,
+    "original_transcript": "five",
+    "asr_transcript": " Bye.",
+    "original_ipa_model_1": "/faɪv/",
+    "asr_ipa_model_1": "/ˈbaɪ/",
+    "original_ipa_model_2": "/ˈfaɪv/",
+    "asr_ipa_model_2": " or ",
+    "original_ipa_model_3": "/faɪv/",
+    "asr_ipa_model_3": "/baɪ/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/faɪv/",
+      "best_ipa_transcript": "/ˈbaɪ/",
+      "confidence": 9,
+      "selected_model": "Model 1",
+      "error": {
+        "IPA Mismatches": 3,
+        "Normalized Error Rate": 0.5,
+        "Similarity Score": 0.5
+      }
+    }
+  },
+  "sample_11": {
+    "speech_status": "healthy",
+    "gender": "male",
+    "duration_seconds": 1.2,
+    "original_transcript": "fill",
+    "asr_transcript": " Phil.",
+    "original_ipa_model_1": "/fɪl/",
+    "asr_ipa_model_1": "/ˈfɪl/",
+    "original_ipa_model_2": "/ˈfɪl/",
+    "asr_ipa_model_2": " or ",
+    "original_ipa_model_3": "/fɪl/",
+    "asr_ipa_model_3": "/fɪl/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/fɪl/",
+      "best_ipa_transcript": "/ˈfɪl/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.2,
+        "Similarity Score": 0.8
+      }
+    }
+  },
+  "sample_12": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 3.75,
+    "original_transcript": "know",
+    "asr_transcript": " No.",
+    "original_ipa_model_1": "/knoʊ/",
+    "asr_ipa_model_1": "/ˈno/",
+    "original_ipa_model_2": "/ˈnəʊ/",
+    "asr_ipa_model_2": "/nə/",
+    "original_ipa_model_3": "/nɔː/",
+    "asr_ipa_model_3": "/noʊ/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/knoʊ/",
+      "best_ipa_transcript": "/ˈno/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 2,
+        "Normalized Error Rate": 0.3333333333333333,
+        "Similarity Score": 0.6666666666666667
+      }
+    }
+  },
+  "sample_13": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 2.7,
+    "original_transcript": "lock",
+    "asr_transcript": " luck.",
+    "original_ipa_model_1": "/ˈlɒk/",
+    "asr_ipa_model_1": "/lʌk/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": "/luːk/",
+    "original_ipa_model_3": "/lɒk/",
+    "asr_ipa_model_3": "/lʌk/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/lɒk/",
+      "best_ipa_transcript": "/lʌk/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.2,
+        "Similarity Score": 0.8
+      }
+    }
+  },
+  "sample_14": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 2.4,
+    "original_transcript": "up",
+    "asr_transcript": " Up.",
+    "original_ipa_model_1": " → ",
+    "asr_ipa_model_1": "/ˈʌp/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": null,
+    "original_ipa_model_3": "/ʌp/",
+    "asr_ipa_model_3": "/ʌp/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ʌp/",
+      "best_ipa_transcript": "/ˈʌp/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.25,
+        "Similarity Score": 0.75
+      }
+    }
+  },
+  "sample_15": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 1.66,
+    "original_transcript": "eyes",
+    "asr_transcript": " Eyes.",
+    "original_ipa_model_1": "/ˈaɪz/",
+    "asr_ipa_model_1": "/ˈaɪz/",
+    "original_ipa_model_2": "/ˈaɪz/",
+    "asr_ipa_model_2": "/ˈeɪz/",
+    "original_ipa_model_3": "/aɪz/",
+    "asr_ipa_model_3": "/aɪz/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ˈaɪz/",
+      "best_ipa_transcript": "/ˈaɪz/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_16": {
+    "speech_status": "healthy",
+    "gender": "female",
+    "duration_seconds": 2.04,
+    "original_transcript": "chop",
+    "asr_transcript": " Chop.",
+    "original_ipa_model_1": "/chɒp/",
+    "asr_ipa_model_1": "/ˈtʃɒp/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": null,
+    "original_ipa_model_3": "/tʃɒp/",
+    "asr_ipa_model_3": "/tʃɒp/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/tʃɒp/",
+      "best_ipa_transcript": "/ˈtʃɒp/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 1,
+        "Normalized Error Rate": 0.16666666666666666,
+        "Similarity Score": 0.8333333333333334
+      }
+    }
+  },
+  "sample_17": {
+    "speech_status": "healthy",
+    "gender": "male",
+    "duration_seconds": 2.64,
+    "original_transcript": "seed",
+    "asr_transcript": " Seed.",
+    "original_ipa_model_1": "/ˈsiːd/",
+    "asr_ipa_model_1": "/ˈsiːd/",
+    "original_ipa_model_2": "/sɛd/",
+    "asr_ipa_model_2": "/sɛd/",
+    "original_ipa_model_3": "/siːd/",
+    "asr_ipa_model_3": "/siːd/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ˈsiːd/",
+      "best_ipa_transcript": "/ˈsiːd/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  },
+  "sample_18": {
+    "speech_status": "healthy",
+    "gender": "male",
+    "duration_seconds": 2.85,
+    "original_transcript": "The wait for work can be very long",
+    "asr_transcript": " The wait for work can be very long.",
+    "original_ipa_model_1": "/ðə wɑɪt fɔr wɔrk kæn bɪ vɹi lɒŋ/",
+    "asr_ipa_model_1": "/ðə wɑɪt fɔr wɔrk kæn bɪ vɹi lɒŋ/",
+    "original_ipa_model_2": "/θ/",
+    "asr_ipa_model_2": "/θ/",
+    "original_ipa_model_3": "/ðə weɪt fɔːr wɜːrk kæn biː vɛri lɔːŋ/",
+    "asr_ipa_model_3": "/ðə weɪt fɔːrk kæn biː vɛri lɔːŋ/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/ðə wɑɪt fɔr wɔrk kæn bɪ vɹi lɒŋ/",
+      "best_ipa_transcript": "/ðə weɪt fɔːr wɜːrk kæn biː vɛri lɔːŋ/",
+      "confidence": 9,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 10,
+        "Normalized Error Rate": 0.38461538461538464,
+        "Similarity Score": 0.6153846153846154
+      }
+    }
+  },
+  "sample_19": {
+    "speech_status": "healthy",
+    "gender": "male",
+    "duration_seconds": 1.47,
+    "original_transcript": "pit",
+    "asr_transcript": " Pit.",
+    "original_ipa_model_1": "/pɪt/",
+    "asr_ipa_model_1": "/pɪt/",
+    "original_ipa_model_2": null,
+    "asr_ipa_model_2": null,
+    "original_ipa_model_3": "/pɪt/",
+    "asr_ipa_model_3": "/pɪt/",
+    "evaluated_ipa": {
+      "best_ipa_original": "/pɪt/",
+      "best_ipa_transcript": "/pɪt/",
+      "confidence": 10,
+      "selected_model": "Original",
+      "error": {
+        "IPA Mismatches": 0,
+        "Normalized Error Rate": 0.0,
+        "Similarity Score": 1.0
+      }
+    }
+  }
+}

@@ -1,7 +1,10 @@
+# process_text.py
 from llama_model import LlamaModelManager
 import re, json
+import streamlit as st
 from typing import List, Dict, Optional
-# ===== CORE FUNCTIONS ===== 
+from audiototext import audio_to_text_whisper
+
 def clean_text(text: str) -> str:
     """Clean and normalize input text."""
     return re.sub(r'\s+', ' ', text).strip() if text else ""
@@ -11,20 +14,10 @@ def extract_ipa(text: str) -> Optional[str]:
     matches = re.findall(r'/([^/]+)/', text)
     return f"/{matches[0]}/" if matches else None
 
-# ===== MODEL FUNCTIONS =====
 def load_model(model_path: str, is_mixtral: bool = False) -> Optional[LlamaModelManager]:
-    """Load and cache the LLaMA or Mixtral model from GGUF file."""
+    """Load the LLaMA or Mixtral model from GGUF file."""
     print(f"Attempting to load model from {model_path}")
     try:
-        # Parameters for loading GGUF files
-        params = {
-            "model_path": model_path,
-            "n_ctx": 2048,
-            "n_gpu_layers": 0 if is_mixtral else -1,  # Offload Mixtral to CPU, LLaMA to GPU
-            "verbose": False
-        }
-        # Load the GGUF file directly
-        # Wrap in LlamaModelManager (assuming it can take a preloaded model)
         model = LlamaModelManager(model_path)
         print(f"Model loaded successfully from {model_path}")
         return model
@@ -42,14 +35,10 @@ def load_model(model_path: str, is_mixtral: bool = False) -> Optional[LlamaModel
     except Exception as e:
         print(f"Unexpected error loading model: {str(e)}")
         return None
-    
-    
+
 def generate_ipa(model: LlamaModelManager, text: str) -> Optional[str]:
-    """Generate IPA transcription with retries."""
-    """Generate IPA transcription."""
     if not text:
         return None
-    
     prompt = f"""You are an expert phonetician. Convert this text to International Phonetic Alphabets (IPA):
 Text: "{text}"
 
@@ -63,15 +52,14 @@ Example:
 
 IPA:
 """
-    
-    for _ in range(2):  # 2 attempts
+    for _ in range(2):
         response = model.generate(
             prompt=prompt,
             max_tokens=100,
             temperature=0.1,
             stop=['\n', 'Text:']
         ).strip()
-        print(response)
+        print(f"IPA response: {response}")
         ipa_start = response.find("/ ")
         ipa_end = response.rfind(" /")
         if ipa_start != -1 and ipa_end != -1 and ipa_start < ipa_end:
@@ -83,11 +71,10 @@ IPA:
     return None
 
 def evaluate_transcriptions(model: LlamaModelManager, 
-                          original_text: str,
-                          transcribed_text: str,
-                          original_ipas: List[str],
-                          transcribed_ipas: List[str]) -> Dict:
-    """Evaluate which IPA transcriptions are best."""
+                           original_text: str,
+                           transcribed_text: str,
+                           original_ipas: List[str],
+                           transcribed_ipas: List[str]) -> Dict:
     prompt = f"""You are a phonetics expert helping evaluate IPA transcriptions.
 
 Original Text: "{original_text}"
@@ -128,18 +115,15 @@ Required JSON Format:
 
 Now Think Step by Step and Give Only the Final JSON Output:
 """
-    
     response = model.generate(
         prompt=prompt,
         max_tokens=400,
         temperature=0.0,
         stop=["\nNote:", "\nExplanation:", "\nNow give", "\nOutput:", "Note:", "Explanation:"]
     ).strip() + '}'
-    
     try:
         print("----------------------"*5)
-        print('response:')
-        print(response)
+        print('Evaluation response:', response)
         print("----------------------"*5)
         return json.loads(response.split("<<CAI-DSVV-IAI>>")[1])
     except:
@@ -150,12 +134,10 @@ Now Think Step by Step and Give Only the Final JSON Output:
         }
 
 def analyze_articulation_errors(model: LlamaModelManager,
-                              original_text: str,
-                              original_ipa: str,
-                              transcribed_text: str,
-                              transcribed_ipa: str) -> Dict:
-    """Analyze phoneme errors using SODA framework (split into two parts)."""
-    # Part 1: Get the errors list
+                               original_text: str,
+                               original_ipa: str,
+                               transcribed_text: str,
+                               transcribed_ipa: str) -> Dict:
     errors_prompt = f"""
 Analyze the transcription for articulation errors using the SODA framework.
 
@@ -191,30 +173,24 @@ Output ONLY this format:
       "transcribed_sound": "IPA symbol(s)",
       "position": "phoneme index or word index"
     }}
-    // Add more errors if needed
   ]
 }}
 <<ERRORS>>
 """
-    
     errors_response = model.generate(
         prompt=errors_prompt,
         max_tokens=1000,
         temperature=0.0,
         stop=['<<ERRORS>>']
     )
-    
     try:
         print("--------------"*5)
-        print("errors_response:")
-        print(errors_response)
+        print("Errors response:", errors_response)
         print("--------------"*5)
-        
         errors_data = json.loads(errors_response)
     except:
         errors_data = {"errors": []}
-    
-    # Part 2: Get affected speech organs
+
     if errors_data["errors"]:
         organs_prompt = f"""
 You are an expert in phonetics and speech articulation.
@@ -222,7 +198,7 @@ You are an expert in phonetics and speech articulation.
 Analyze the following articulation errors and identify which human speech organs are likely responsible for the errors.
 
 Errors:
-{json.dumps(errors_data["errors"], indent=2,ensure_ascii=False)}
+{json.dumps(errors_data["errors"], indent=2, ensure_ascii=False)}
 
 Possible Organs: lips, teeth, tongue, palate, velum, glottis
 
@@ -240,36 +216,28 @@ Format Example:
 }}
 <<ORGANS>>
 """
-
-
-        
         organs_response = model.generate(
             prompt=organs_prompt,
             max_tokens=300,
             temperature=0.0,
             stop=['<<ORGANS>>']
         )
-        
         try:
             print("--------------"*5)
-            print("organs_response:")
-            print(organs_response)
+            print("Organs response:", organs_response)
             print("--------------"*5)
             organs_data = json.loads(organs_response)
         except:
             organs_data = {"affected_speech_organs": []}
     else:
         organs_data = {"affected_speech_organs": []}
-    
-    # Merge results
+
     return {
         "errors": errors_data.get("errors", []),
         "affected_speech_organs": organs_data.get("affected_speech_organs", [])
     }
 
-def evaluate_soda_analyses(model: LlamaModelManager,
-                         analyses: List[Dict]) -> Dict:
-    """Evaluate multiple SODA analyses and select the best one."""
+def evaluate_soda_analyses(model: LlamaModelManager, analyses: List[Dict]) -> Dict:
     prompt = f"""
 Evaluate these SODA analyses and select the most accurate one:
 
@@ -288,21 +256,19 @@ Rules:
   "consolidated_analysis": (merged best findings)
 }}
 
-JSON Output:"""
-    
+JSON Output:
+"""
     response = model.generate(
         prompt=prompt,
         max_tokens=500,
         temperature=0.1,
         stop=['}\n']
     ).strip() + '}'
-    
     try:
         print("--------------"*5)
-        print("response:")
-        print(response)
+        print("SODA evaluation response:", response)
         print("--------------"*5)
-        return json.loads(response,ensure_ascii=False )
+        return json.loads(response, ensure_ascii=False)
     except:
         return {
             "selected_analysis": 0,
@@ -310,136 +276,71 @@ JSON Output:"""
             "consolidated_analysis": analyses[0]
         }
 
-# def generate_soda_summary(model: LlamaModelManager, 
-#                          original_text: str,
-#                          transcribed_text: str,
-#                          best_ipa_original: str,
-#                          best_ipa_transcript: str,
-#                          soda_analysis: Dict) -> Dict:
-#     """Generate a final summary of the SODA analysis."""
-#     prompt = f"""
-# You are an expert in phonetics and speech-language pathology.
-# Your task is to generate a concise final summary based on the SODA analysis of articulation errors.
-
-# Original Text: "{original_text}"
-# Transcribed Text: "{transcribed_text}"
-# Original IPA: "{best_ipa_original}"
-# Transcribed IPA: "{best_ipa_transcript}"
-# SODA Analysis: {json.dumps(soda_analysis, indent=2, ensure_ascii=False)}
-
-# Instructions:
-# - Step 1: Review the SODA analysis, including identified errors and affected speech organs.
-# - Step 2: Summarize the total number of errors and their types (Substitution, Omission, Distortion, Addition).
-# - Step 3: Highlight the most frequently affected speech organs.
-# - Step 4: Provide a brief assessment of articulation accuracy (e.g., "High", "Moderate", "Low") based on error count and severity.
-# - Step 5: Assign a confidence score (1-10) for the summary based on the clarity and consistency of the analysis.
-
-# Output Format:
-# - Output strictly JSON in the format below.
-# - NO explanations. NO extra text.
-# - OUTPUT JSON ONLY.
-
-# Required JSON Format:
-# {{
-#   "total_errors": ...,
-#   "error_breakdown": {{
-#     "substitution": ...,
-#     "omission": ...,
-#     "distortion": ...,
-#     "addition": ...
-#   }},
-#   "most_affected_organs": ["...", "..."],
-#   "articulation_accuracy": "High|Moderate|Low",
-#   "confidence": ...
-# }}
-# """
-    
-#     response = model.generate(
-#         prompt=prompt,
-#         max_tokens=300,
-#         temperature=0.0,
-#         stop=['}\n']
-#     ).strip() + '}'
-    
-#     try:
-#         return json.loads(response)
-#     except:
-#         return {
-#             "total_errors": len(soda_analysis["errors"]),
-#             "error_breakdown": {
-#                 "substitution": sum(1 for e in soda_analysis["errors"] if e["type"] == "Substitution"),
-#                 "omission": sum(1 for e in soda_analysis["errors"] if e["type"] == "Omission"),
-#                 "distortion": sum(1 for e in soda_analysis["errors"] if e["type"] == "Distortion"),
-#                 "addition": sum(1 for e in soda_analysis["errors"] if e["type"] == "Addition")
-#             },
-#             "most_affected_organs": soda_analysis["affected_speech_organs"] or ["unknown"],
-#             "articulation_accuracy": "Moderate",
-#             "confidence": 5
-#         }
-                    
-           
 def generate_soda_summary(model: LlamaModelManager, 
-                         original_text: str,
-                         transcribed_text: str,
-                         best_ipa_original: str,
-                         best_ipa_transcript: str,
-                         soda_analysis: Dict,
-                         psychological_profile: Dict = None) -> Dict:
-    """Generate a final summary of the SODA analysis with psychological input."""
-    print(psychological_profile)
+                          original_text: str,
+                          transcribed_text: str,
+                          best_ipa_original: str,
+                          best_ipa_transcript: str,
+                          soda_analysis: Dict,
+                          psychological_profile: Dict = None) -> Dict:
+    print(f"Psychological profile: {psychological_profile}")
     prompt = f"""
-You are an expert in phonetics and speech-language pathology.
-Your task is to generate a concise final summary based on the SODA analysis of articulation errors and psychological profile.
+You are a clinical speech-language pathologist and AI assistant.
 
-Original Text: "{original_text}"
-Transcribed Text: "{transcribed_text}"
-Original IPA: "{best_ipa_original}"
-Transcribed IPA: "{best_ipa_transcript}"
-SODA Analysis: {json.dumps(soda_analysis, indent=2, ensure_ascii=False)}
-Psychological Profile: {json.dumps(psychological_profile, indent=2, ensure_ascii=False) if psychological_profile else {{}}}
+You will analyze articulation error data (SODA analysis) along with a psychological profile to generate a highly focused JSON summary. The goal is to improve articulation outcomes by tailoring suggestions based on actual speech errors and user-reported emotional or cognitive states.
+
+Input Data:
+- Original Text: "{original_text}"
+- Transcribed Text: "{transcribed_text}"
+- Original IPA: "{best_ipa_original}"
+- Transcribed IPA: "{best_ipa_transcript}"
+- SODA Analysis: {json.dumps(soda_analysis, indent=2, ensure_ascii=False)}
+- Psychological Profile: {json.dumps(psychological_profile, indent=2, ensure_ascii=False) if psychological_profile else {}}
 
 Instructions:
-- Step 1: Review the SODA analysis, including identified errors and affected speech organs.
-- Step 2: Summarize the total number of errors and their types (Substitution, Omission, Distortion, Addition).
-- Step 3: Highlight the most frequently affected speech organs.
-- Step 4: Incorporate psychological profile data (e.g., self-assessment, emotional impact) to assess motivation and therapy needs.
-- Step 5: Provide a brief assessment of articulation accuracy (e.g., "High", "Moderate", "Low") based on error count, severity, and psychological factors.
-- Step 6: Suggest Some Personalised Exercises to overcome this articulation error based on his psychological profile and SODA Analysis.
+1. Use **SODA analysis** to count articulation errors and identify their types.
+2. Determine which organs (e.g., tongue, lips, palate) are most affected.
+3. Assess articulation accuracy as "High", "Moderate", or "Low".
+4. Analyze the **psychological profile** only for factors that affect speech motivation or consistency (e.g., anxiety, frustration, avoidance). **Do NOT include raw survey answers or preferences.**
+5. Create **custom articulation exercises** based on the specific SODA issues (e.g., substitution of /s/ → /ʃ/) and psychological profile. Exercises must be detailed and **NOT copied** from user preferences. Be creative and therapeutic.
+6. Output must be **pure JSON**, structured like this:
 
-
-Output Format:
-- Output strictly JSON in the format below.
-- NO explanations. NO extra text.
-- OUTPUT JSON ONLY.
-
-Required JSON Format:
-{{
-  "total_errors": ...,
+Output Format (Strictly JSON):
+<<CAI-DSVV-IAI>>{{
+  "total_errors": int,
   "error_breakdown": {{
-    "substitution": ...,
-    "omission": ...,
-    "distortion": ...,
-    "addition": ...
+    "substitution": int,
+    "omission": int,
+    "distortion": int,
+    "addition": int
   }},
-  "most_affected_organs": ["...", "..."],
-  "psychological_insights": "...",
+  "most_affected_organs": ["tongue", "palate"],
+  "psychological_insights": "Brief summary of how emotional state affects articulation effort or consistency.",
   "articulation_accuracy": "High|Moderate|Low",
-  "personalized_exercises": ...
-}}
+  "personalized_exercises": [
+    "Exercise 1: ...",
+    "Exercise 2: ..."
+  ]
+}}<<CAI-DSVV-IAI>>
+
+IMPORTANT:
+- Do not echo user preferences like 'interactive' or '10 minutes'.
+- Do not include irrelevant psychological commentary.
+- Only output valid JSON — no extra text.
+- Wrap the entire JSON output between the tags:
+    - <<CAI-DSVV-IAI>> and <<CAI-DSVV-IAI>>.
 """
-    
     response = model.generate(
         prompt=prompt,
         max_tokens=300,
         temperature=0.0,
         stop=['}\n']
     ).strip() + '}'
-    
     try:
         print("-><-"*5)
-        print(response)
+        print("SODA summary response:", response)
         print("-><-"*5)
-        return json.loads(response)
+        return json.loads(response.split('<<CAI-DSVV-IAI>>')[1])
     except:
         return {
             "total_errors": len(soda_analysis["errors"]),
@@ -450,180 +351,102 @@ Required JSON Format:
                 "addition": sum(1 for e in soda_analysis["errors"] if e["type"] == "Addition")
             },
             "most_affected_organs": soda_analysis["affected_speech_organs"] or ["unknown"],
-            "articulation_accuracy": "Moderate",
             "psychological_insights": "No significant psychological impact noted" if not psychological_profile else f"Based on profile: {psychological_profile.get('speech_impact', 'Moderate')}",
-            "confidence": 5
-        }         
-                    
-                    
-                    
-                    
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+            "articulation_accuracy": "Moderate",
+            "personalized_exercises": ["Practice minimal pair words.", "Repeat challenging phonemes in isolation."]
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-# Prompt:1
-
-
-
-# prompt = f"""You are a phonetics expert helping evaluate IPA transcriptions.
-
-# Original Text: "{original_text}"
-# Original IPA Options:
-# 1. {original_ipas[0]}
-# 2. {original_ipas[1]}
-# 3. {original_ipas[2]}
-
-# Transcribed Text: "{transcribed_text}"
-# Transcribed IPA Options:
-# 1. {transcribed_ipas[0]}
-# 2. {transcribed_ipas[1]}
-# 3. {transcribed_ipas[2]}
-
-# Evaluation Instructions:
-# - Step 1: Think step-by-step to generate the correct IPA transcription for the original text.
-# - Step 2: Compare each original IPA option to the correct IPA, and select the most accurate one.
-# - Step 3: Think step-by-step to determine the expected IPA for the transcribed text.
-# - Step 4: Compare each transcribed IPA option to the expected one, and select the most accurate.
-# - Step 5: Based on phonetic similarity, stress patterns, and articulation, select one final transcription for each.
-# - Step 6: Assign a confidence score (1 to 10) based on consistency, clarity, and match quality.
-# - Step 7: Identify which model generated the selected transcriptions.
-
-# Output Format:
-# - Output strictly JSON in the format below.
-# - NO explanations. NO extra text.
-# - DO NOT say "Answer", "Response", or "Output".
-# - OUTPUT JSON ONLY.
-
-# Required JSON Format:
-# <<CAI-DSVV-IAI>>{{
-#   "best_ipa_original": "...",
-#   "best_ipa_transcript": "...",
-#   "confidence": ...,
-#   "selected_model": ...
-# }}<<CAI-DSVV-IAI>>
-# """
-
-
-
-
-
-
-# prompt: 2
-
-# prompt = f"""You are an expert in speech-language pathology and phonetics.
-# Your task is to interpret phoneme-level articulation errors between the original and transcribed IPA sequences.
-# Use the SODA classification system (Substitution, Omission, Distortion, Addition).
-# Also infer articulatory features like affected organ (e.g., tongue, lips, glottis) and part-of-speech context.
-
-# Original IPA: "{best_ipa_original}"
-# Transcribed IPA: "{best_ipa_transcript}"
-
-# Instructions:
-# - Step 1: Compare each phoneme in both IPA sequences.
-# - Step 2: Identify phoneme mismatches and categorize each as Substitution, Omission, Distortion, or Addition.
-# - Step 3: For each error, determine the likely articulatory organ involved.
-# - Step 4: Indicate the part-of-speech of the word containing the error (if identifiable).
-# - Step 5: Summarize findings with error type counts and linguistic patterns.
-# - Step 6: Assign a confidence score (1 to 10) for the overall analysis.
-
-# Output Format:
-# - Output strictly JSON in the format below.
-# - NO explanations. NO extra text.
-# - DO NOT say "Answer", "Response", or "Output".
-# - OUTPUT JSON ONLY.
-
-# Required JSON Format:
-# <<CAI-DSVV-IAI>>{{
-#   "errors": [
-#     {{
-#       "original_phoneme": "...",
-#       "transcribed_phoneme": "...",
-#       "error_type": "Substitution|Omission|Distortion|Addition",
-#       "articulatory_organ": "...",
-#       "part_of_speech": "noun|verb|adj|adv|other"
-#     }}
-#     ...
-#   ],
-#   "summary": {{
-#     "total_errors": ...,
-#     "substitution": ...,
-#     "omission": ...,
-#     "distortion": ...,
-#     "addition": ...
-#   }},
-#   "confidence": ...
-# }}<<CAI-DSVV-IAI>>
-# """
-
-
-
-
-# prompt 3:-
-
-# prompt = f"""You are an expert in speech-language therapy and cognitive psychology.
-# Your task is to generate personalized articulation therapy recommendations based on phoneme-level errors and psychological profile.
-# Use insights from prior IPA interpretation and responses to psychological assessment questions.
-
-# IPA Error Summary:
-# {ipa_error_summary}
-
-# Psychological Profile:
-# {psychological_answers}
-
-# Instructions:
-# - Step 1: Analyze the IPA error types (Substitution, Omission, Distortion, Addition) and frequency.
-# - Step 2: Consider the part-of-speech and affected articulatory organs for each error.
-# - Step 3: Integrate psychological assessment data to determine user's emotional and cognitive needs.
-# - Step 4: Generate 3 personalized therapy exercises targeting both articulation errors and psychological support.
-# - Step 5: Justify each recommendation in one sentence.
-# - Step 6: Assign an overall therapy priority level (Low | Medium | High).
-
-# Output Format:
-# - Output strictly JSON in the format below.
-# - NO explanations. NO extra text.
-# - DO NOT say "Answer", "Response", or "Output".
-# - OUTPUT JSON ONLY.
-
-# Required JSON Format:
-# <<CAI-DSVV-FTM>>{{
-#   "recommendations": [
-#     {{
-#       "exercise": "...",
-#       "justification": "..."
-#     }},
-#     ...
-#   ],
-#   "therapy_priority": "Low|Medium|High"
-# }}<<CAI-DSVV-FTM>>
-# """
+def process_inputs(audio_path: str, 
+                   original_text: str,
+                   model_paths: List[str]) -> Optional[Dict]:
+    """Full processing pipeline with evaluation."""
+    model_instances = []
+    try:
+        raw_text = audio_to_text_whisper(audio_path)
+        transcribed_text = clean_text(raw_text)
+        if not transcribed_text:
+            st.error("Audio transcription failed")
+            return None
+        
+        original_ipas = []
+        transcribed_ipas = []
+        
+        with st.spinner("Generating IPA variants..."):
+            for i in range(3):
+                model = load_model(model_paths[i])
+                if model:
+                    model_instances.append(model)
+                    ipa = generate_ipa(model, original_text)
+                    if ipa:
+                        original_ipas.append(ipa)
+                        st.write(f"Original IPA {i+1}: {ipa}")
+            
+            for i in range(3):
+                model = load_model(model_paths[i])
+                if model and model not in model_instances:
+                    model_instances.append(model)
+                ipa = generate_ipa(model, transcribed_text)
+                if ipa:
+                    transcribed_ipas.append(ipa)
+                    st.write(f"Transcribed IPA {i+1}: {ipa}")
+        
+        if len(original_ipas) < 3 or len(transcribed_ipas) < 3:
+            st.error("Insufficient IPA variants generated")
+            return None
+        
+        with st.spinner("Evaluating transcriptions..."):
+            evaluation_model = load_model(model_paths[3])
+            if evaluation_model:
+                model_instances.append(evaluation_model)
+            evaluation = evaluate_transcriptions(
+                evaluation_model,
+                original_text,
+                transcribed_text,
+                original_ipas,
+                transcribed_ipas
+            )
+        
+        results = {
+            "original_text": original_text,
+            "transcribed_text": transcribed_text,
+            "original_ipas": original_ipas,
+            "transcribed_ipas": transcribed_ipas,
+            "evaluation": evaluation
+        }
+        
+        with st.spinner("Performing SODA analysis..."):
+            best_original_ipa = evaluation["best_ipa_original"]
+            best_transcribed_ipa = evaluation["best_ipa_transcript"]
+            
+            soda_analyses = []
+            for i in range(3):
+                model = load_model(model_paths[i])
+                if model and model not in model_instances:
+                    model_instances.append(model)
+                analysis = analyze_articulation_errors(
+                    model,
+                    original_text,
+                    best_original_ipa,
+                    transcribed_text,
+                    best_transcribed_ipa
+                )
+                soda_analyses.append(analysis)
+                st.write(f"SODA Analysis {i+1}: {json.dumps(analysis, indent=2, ensure_ascii=False)}")
+            
+            evaluation_model = load_model(model_paths[3])
+            if evaluation_model and evaluation_model not in model_instances:
+                model_instances.append(evaluation_model)
+            soda_evaluation = evaluate_soda_analyses(
+                evaluation_model,
+                soda_analyses
+            )
+            
+            results["soda_analyses"] = soda_analyses
+            results["soda_evaluation"] = soda_evaluation
+        
+        return results
+    
+    finally:
+        for _ in range(len(model_instances)):
+            LlamaModelManager.cleanup()
+        print("All models cleaned up at end of process_inputs.")

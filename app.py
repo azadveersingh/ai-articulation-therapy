@@ -2,8 +2,6 @@
 import streamlit as st
 from process_text import *
 from llama_model import LlamaModelManager
-import json
-from typing import List, Dict, Optional
 
 if __name__ == '__main__':
     st.set_page_config(layout="wide", page_title="Advanced IPA Transcriber")
